@@ -2,9 +2,12 @@ import dbConnect from '@/lib/dbConnect'
 import UserModel from '@/models/user.model'
 import bcrypt from 'bcryptjs'
 import { sendVerificationEmail } from '@/helpers/sendVerificationEmail'
+import mongoose from 'mongoose'
 
 export async function POST(request: Request) {
     await dbConnect()
+    console.log('Connected to MongoDB:', mongoose.connection.name);  // Log the database name
+
     try {
         const { username, email, password } = await request.json()
         const existingUserVerifiedByUsername = await UserModel.findOne({
