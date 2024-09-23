@@ -1,36 +1,95 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Anonymous Messaging Platform
 
-## Getting Started
+This project is an **Anonymous Messaging Platform** where users can register, share their unique profile link, and receive anonymous messages from others. It includes authentication and message management, along with harmful message detection and filtering.
 
-First, run the development server:
+## Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- User registration and authentication (sign-in, sign-up, and verification pages).
+- Anonymous message sending.
+- Message filtering to flag harmful or abusive content.
+- Dashboard to manage received messages.
+- Responsive UI with Next.js and Tailwind CSS.
+- API integration using Axios for managing messages.
+- Toast notifications for user interactions.
+
+## Setup Instructions
+
+### Prerequisites
+
+- Node.js (v16+)
+- MongoDB Cloud or local instance
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/yourusername/anonymous-messaging-platform.git
+   cd anonymous-messaging-platform
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Set up environment variables:
+
+   Create a `.env` file in the root directory and include the following variables:
+
+   ```bash
+   NEXTAUTH_URL=http://localhost:3000
+   NEXT_PUBLIC_API_URL=http://localhost:3000/api
+   MONGODB_URI=your-mongodb-uri
+   ```
+
+4. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+   The app should now be running at `http://localhost:3000`.
+
+## API Routes
+
+### DELETE `/api/delete-message/:id`
+
+Deletes a specific message by its ID and returns a confirmation message.
+
+### Authentication Pages
+- **Sign In Page:** Allows users to log in using their credentials.
+- **Sign Up Page:** Lets users create a new account.
+- **Verify Page:** Handles email verification for new users.
+
+### Dashboard Page
+- Displays all the received anonymous messages.
+- Users can delete messages from the dashboard.
+- Contains a warning dialog before deleting a message.
+
+## Components
+
+- **Navbar:** Displays the navigation bar with login/logout buttons depending on the user session.
+- **MessageCard:** Displays individual messages with the ability to delete them.
+
+## Technologies Used
+
+- **Next.js**: Framework for building server-rendered React applications.
+- **Tailwind CSS**: Utility-first CSS framework for rapid UI development.
+- **Axios**: Promise-based HTTP client for API requests.
+- **MongoDB**: NoSQL database for storing user and message data.
+- **NextAuth.js**: Authentication solution for Next.js applications.
+- **React Toast**: Provides toast notifications for user feedback.
+
+## Error Handling
+
+- Hydration errors are mitigated by ensuring consistent rendering between client and server components.
+- All pages inside the `(auth)` folder share a common layout for seamless navigation.
+
+## License
+
+This project is licensed under the MIT License.
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This `README.md` file includes the key features, installation steps, and additional details without the project structure section. You can customize the URLs or specific sections as needed.
