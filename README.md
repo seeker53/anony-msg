@@ -96,10 +96,10 @@ npm start
 To learn more about the technologies used, check out the following documentation:
 
 - [Next.js Documentation](https://nextjs.org/docs)
-- [MongoDB Documentation](https://www.mongodb.com/docs/)
-- [TailwindCSS Documentation](https://tailwindcss.com/docs)
-- [Resend Documentation](https://resend.com/docs)
-- [ShadCN/UI Documentation](https://ui.shadcn.dev/docs)
+- [MongoDB Documentation](https://www.mongodb.com/docs/manual)
+- [TailwindCSS Documentation](https://tailwindcss.com/docs/installation)
+- [Resend Documentation](https://resend.com/docs/send-with-nextjs)
+- [ShadCN/UI Documentation](https://ui.shadcn.com/docs)
 
 ## License
 
