@@ -7,8 +7,8 @@ import { Toaster } from '@/components/ui/toaster';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-    title: 'True Feedback',
-    description: 'Real feedback from real people.',
+    title: 'Whisper Net',
+    description: 'A safe space for sharing thoughts anonymously. Connect, share, and receive genuine feedback without barriers.',
 };
 
 interface RootLayoutProps {
@@ -17,19 +17,10 @@ interface RootLayoutProps {
 
 export default async function RootLayout({ children }: RootLayoutProps) {
     return (
-        <html lang="en" className="bg-gray-50">
+        <html lang="en" >
             <AuthProvider>
-                <body className={`${inter.className} flex flex-col min-h-screen`}>
-                    <header className="bg-gray-900 text-white p-4">
-                        <h1 className="text-2xl font-bold">True Feedback</h1>
-                        <p className="text-sm">Share your thoughts anonymously.</p>
-                    </header>
-                    <main className="flex-grow">
-                        {children}
-                    </main>
-                    <footer className="bg-gray-900 text-white text-center p-4">
-                        <p>&copy; {new Date().getFullYear()} True Feedback. All rights reserved.</p>
-                    </footer>
+                <body className={inter.className}>
+                    {children}
                     <Toaster />
                 </body>
             </AuthProvider>

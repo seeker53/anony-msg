@@ -14,7 +14,7 @@ function Navbar() {
         <nav className="p-4 md:p-6 shadow-md bg-gradient-to-r from-purple-600 to-blue-500 text-white">
             <div className="container mx-auto flex justify-between items-center">
                 <Link href="/" className="text-2xl font-bold">
-                    True Feedback
+                    Whisper Net
                 </Link>
                 <div className="flex items-center space-x-4">
                     {session ? (

@@ -1,17 +1,27 @@
 [
     {
-        "title": "Message from User123",
-        "content": "Hey, how are you doing today?",
-        "received": "10 minutes ago"
+        "title": "Message from CuriousCat",
+        "content": "What's your favorite hobby?",
+        "received": "5 minutes ago"
     },
     {
-        "title": "Message from SecretAdmirer",
-        "content": "I really liked your recent post!",
-        "received": "2 hours ago"
+        "title": "Message from AnonFan",
+        "content": "Your insights are always inspiring!",
+        "received": "30 minutes ago"
     },
     {
-        "title": "Message from MysteryGuest",
-        "content": "Do you have any book recommendations?",
+        "title": "Message from ThoughtfulObserver",
+        "content": "Have you ever thought about starting a podcast?",
+        "received": "3 hours ago"
+    },
+    {
+        "title": "Message from SilentSupporter",
+        "content": "I'm here if you ever want to chat.",
         "received": "1 day ago"
+    },
+    {
+        "title": "Message from HiddenFriend",
+        "content": "I admire your creativity!",
+        "received": "2 days ago"
     }
 ]
