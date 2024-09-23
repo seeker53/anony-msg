@@ -1,120 +1,106 @@
-# anony-msg
+# Anony-msg
 
-**anony-msg** is an anonymous messaging platform built with Next.js and MongoDB. It allows users to create accounts, share unique links, and receive anonymous messages from other users. This project utilizes various modern tools and libraries to offer a smooth user experience with robust form validation, authentication, and messaging features.
+Anony-msg is an anonymous messaging platform built using **Next.js** and **MongoDB**. This project allows users to send and receive anonymous feedback or messages, with features such as message filtering, authentication, and more.
 
 ## Features
 
-- User authentication and session management via NextAuth
-- Anonymous messaging system with message filtering
-- Deletion of messages with confirmation
-- Responsive UI using Radix UI and Tailwind CSS
-- Form validation using React Hook Form and Zod
-- Email integration using Resend API for verification and notifications
-- Toast notifications for instant feedback
+- Anonymous message sending and receiving
+- Message filtering to prevent harmful or abusive content
+- User authentication (sign-in, sign-up) with **NextAuth**
+- Responsive design built with **TailwindCSS**
+- Custom components and UI elements using **shadcn/ui**
+- Integrated email sending functionality using **Resend**
+- MongoDB for data storage with **Mongoose** for ORM
+- API for deleting and managing messages
 
 ## Tech Stack
 
-- **Next.js**: React framework with server-side rendering and API routes
-- **MongoDB**: NoSQL database for storing user and message data
-- **Tailwind CSS**: Utility-first CSS framework for styling
-- **Radix UI**: Accessible UI components for building responsive interfaces
-- **Zod**: Schema-based validation library integrated with React Hook Form
-- **Resend API**: For handling email communications (verification, notifications)
-- **NextAuth.js**: Authentication for Next.js applications
-- **Mongoose**: Elegant MongoDB object modeling for Node.js
+- **Next.js**: Full-stack React framework for building web applications.
+- **MongoDB**: NoSQL database for storing user and message data.
+- **Mongoose**: Object Data Modeling (ODM) library for MongoDB and Node.js.
+- **React Hook Form**: For handling form validation and submission.
+- **Zod**: Schema validation library for TypeScript.
+- **Axios**: For handling API requests.
+- **TailwindCSS**: Utility-first CSS framework for styling.
+- **ShadCN**: For building the UI components.
+- **Resend**: Email service for sending email notifications.
 
-## Prerequisites
+## Installation
 
-To run this project locally, ensure you have the following:
+### Prerequisites
 
-- [Node.js](https://nodejs.org/en/) >= 14.x
-- [MongoDB](https://www.mongodb.com/) (or use MongoDB Cloud)
-- [Resend API](https://resend.com) for email service
+Ensure you have the following installed:
 
-## Getting Started
-
-### 1. Clone the Repository
+- **Node.js**: Version 20.14.0 or higher.
+- **MongoDB**: A running instance of MongoDB.
+  
+### Clone the Repository
 
 ```bash
 git clone https://github.com/your-username/anony-msg.git
 cd anony-msg
 ```
 
-### 2. Install Dependencies
+### Install Dependencies
 
 ```bash
 npm install
 ```
 
-### 3. Set Up Environment Variables
+### Configure Environment Variables
 
-Create a `.env` file in the root directory and add the following environment variables:
+Create a `.env` file at the root of your project and add the following:
 
-```plaintext
+```bash
 MONGODB_URI=your_mongodb_connection_string
 RESEND_API_KEY=your_resend_api_key
 NEXTAUTH_SECRET=any_secret_value_of_your_choice
 ```
 
-### 4. Run the Development Server
+Make sure to replace the placeholder values with your actual credentials.
 
-Start the development server by running:
+### Running the Application
+
+For development, run:
 
 ```bash
 npm run dev
 ```
 
-This will start the app on [http://localhost:3000](http://localhost:3000).
+The app will start running locally on `http://localhost:3000`.
 
-### 5. Build for Production
-
-To create a production build, use:
+For production build, run:
 
 ```bash
 npm run build
-```
-
-Then start the production server:
-
-```bash
 npm start
 ```
 
-## Scripts
-
-- `npm run dev`: Starts the development server on [http://localhost:3000](http://localhost:3000)
-- `npm run build`: Builds the app for production
-- `npm run start`: Runs the app in production mode
-- `npm run lint`: Lints the code for any errors
-
 ## Project Structure
 
-This project follows a structured approach using Next.js and aliases defined in the `components.json` file:
+- **Next.js** for front-end and API routes.
+- **MongoDB** and **Mongoose** for data storage.
+- **NextAuth** for user authentication.
+- **ShadCN/UI** for UI components.
+- **Resend** for sending emails.
 
-- **Components**: UI components are stored under `@/components` for modular and reusable design.
-- **Utils**: Utility functions and helpers are stored under `@/lib/utils`.
-- **Hooks**: Custom React hooks are defined in `@/hooks`.
-- **Styles**: Tailwind CSS configuration can be found in `tailwind.config.ts`, and global styles in `src/app/globals.css`.
+## Scripts
 
-## Dependencies
+- `npm run dev`: Runs the app in development mode.
+- `npm run build`: Builds the app for production.
+- `npm start`: Runs the built app in production mode.
+- `npm run lint`: Runs ESLint to check for code issues.
 
-Below is a list of key dependencies used in this project:
+## Learn More
 
-- **React**: Front-end library for building user interfaces
-- **Next.js**: Framework for server-side rendering and static site generation
-- **MongoDB & Mongoose**: Database and ODM for data persistence
-- **Tailwind CSS**: Utility-first CSS framework
-- **Zod**: Schema-based validation library
-- **NextAuth.js**: Authentication for Next.js apps
-- **Resend**: Email service for sending verification and notifications
-- **Radix UI**: Unstyled, accessible components for building custom UI
+To learn more about the technologies used, check out the following documentation:
 
-## Development Tools
-
-- **TypeScript**: Type safety and tooling
-- **ESLint**: Linting for code consistency
-- **PostCSS**: Transformations for CSS
+- [Next.js Documentation](https://nextjs.org/docs)
+- [MongoDB Documentation](https://www.mongodb.com/docs/)
+- [TailwindCSS Documentation](https://tailwindcss.com/docs)
+- [Resend Documentation](https://resend.com/docs)
+- [ShadCN/UI Documentation](https://ui.shadcn.dev/docs)
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License.
