@@ -1,95 +1,120 @@
-# Anonymous Messaging Platform
+# anony-msg
 
-This project is an **Anonymous Messaging Platform** where users can register, share their unique profile link, and receive anonymous messages from others. It includes authentication and message management, along with harmful message detection and filtering.
+**anony-msg** is an anonymous messaging platform built with Next.js and MongoDB. It allows users to create accounts, share unique links, and receive anonymous messages from other users. This project utilizes various modern tools and libraries to offer a smooth user experience with robust form validation, authentication, and messaging features.
 
 ## Features
 
-- User registration and authentication (sign-in, sign-up, and verification pages).
-- Anonymous message sending.
-- Message filtering to flag harmful or abusive content.
-- Dashboard to manage received messages.
-- Responsive UI with Next.js and Tailwind CSS.
-- API integration using Axios for managing messages.
-- Toast notifications for user interactions.
+- User authentication and session management via NextAuth
+- Anonymous messaging system with message filtering
+- Deletion of messages with confirmation
+- Responsive UI using Radix UI and Tailwind CSS
+- Form validation using React Hook Form and Zod
+- Email integration using Resend API for verification and notifications
+- Toast notifications for instant feedback
 
-## Setup Instructions
+## Tech Stack
 
-### Prerequisites
+- **Next.js**: React framework with server-side rendering and API routes
+- **MongoDB**: NoSQL database for storing user and message data
+- **Tailwind CSS**: Utility-first CSS framework for styling
+- **Radix UI**: Accessible UI components for building responsive interfaces
+- **Zod**: Schema-based validation library integrated with React Hook Form
+- **Resend API**: For handling email communications (verification, notifications)
+- **NextAuth.js**: Authentication for Next.js applications
+- **Mongoose**: Elegant MongoDB object modeling for Node.js
 
-- Node.js (v16+)
-- MongoDB Cloud or local instance
+## Prerequisites
 
-### Installation
+To run this project locally, ensure you have the following:
 
-1. Clone the repository:
+- [Node.js](https://nodejs.org/en/) >= 14.x
+- [MongoDB](https://www.mongodb.com/) (or use MongoDB Cloud)
+- [Resend API](https://resend.com) for email service
 
-   ```bash
-   git clone https://github.com/yourusername/anonymous-messaging-platform.git
-   cd anonymous-messaging-platform
-   ```
+## Getting Started
 
-2. Install dependencies:
+### 1. Clone the Repository
 
-   ```bash
-   npm install
-   ```
+```bash
+git clone https://github.com/your-username/anony-msg.git
+cd anony-msg
+```
 
-3. Set up environment variables:
+### 2. Install Dependencies
 
-   Create a `.env` file in the root directory and include the following variables:
+```bash
+npm install
+```
 
-   ```bash
-   NEXTAUTH_URL=http://localhost:3000
-   NEXT_PUBLIC_API_URL=http://localhost:3000/api
-   MONGODB_URI=your-mongodb-uri
-   ```
+### 3. Set Up Environment Variables
 
-4. Start the development server:
+Create a `.env` file in the root directory and add the following environment variables:
 
-   ```bash
-   npm run dev
-   ```
+```plaintext
+MONGODB_URI=your_mongodb_connection_string
+RESEND_API_KEY=your_resend_api_key
+NEXTAUTH_SECRET=any_secret_value_of_your_choice
+```
 
-   The app should now be running at `http://localhost:3000`.
+### 4. Run the Development Server
 
-## API Routes
+Start the development server by running:
 
-### DELETE `/api/delete-message/:id`
+```bash
+npm run dev
+```
 
-Deletes a specific message by its ID and returns a confirmation message.
+This will start the app on [http://localhost:3000](http://localhost:3000).
 
-### Authentication Pages
-- **Sign In Page:** Allows users to log in using their credentials.
-- **Sign Up Page:** Lets users create a new account.
-- **Verify Page:** Handles email verification for new users.
+### 5. Build for Production
 
-### Dashboard Page
-- Displays all the received anonymous messages.
-- Users can delete messages from the dashboard.
-- Contains a warning dialog before deleting a message.
+To create a production build, use:
 
-## Components
+```bash
+npm run build
+```
 
-- **Navbar:** Displays the navigation bar with login/logout buttons depending on the user session.
-- **MessageCard:** Displays individual messages with the ability to delete them.
+Then start the production server:
 
-## Technologies Used
+```bash
+npm start
+```
 
-- **Next.js**: Framework for building server-rendered React applications.
-- **Tailwind CSS**: Utility-first CSS framework for rapid UI development.
-- **Axios**: Promise-based HTTP client for API requests.
-- **MongoDB**: NoSQL database for storing user and message data.
-- **NextAuth.js**: Authentication solution for Next.js applications.
-- **React Toast**: Provides toast notifications for user feedback.
+## Scripts
 
-## Error Handling
+- `npm run dev`: Starts the development server on [http://localhost:3000](http://localhost:3000)
+- `npm run build`: Builds the app for production
+- `npm run start`: Runs the app in production mode
+- `npm run lint`: Lints the code for any errors
 
-- Hydration errors are mitigated by ensuring consistent rendering between client and server components.
-- All pages inside the `(auth)` folder share a common layout for seamless navigation.
+## Project Structure
+
+This project follows a structured approach using Next.js and aliases defined in the `components.json` file:
+
+- **Components**: UI components are stored under `@/components` for modular and reusable design.
+- **Utils**: Utility functions and helpers are stored under `@/lib/utils`.
+- **Hooks**: Custom React hooks are defined in `@/hooks`.
+- **Styles**: Tailwind CSS configuration can be found in `tailwind.config.ts`, and global styles in `src/app/globals.css`.
+
+## Dependencies
+
+Below is a list of key dependencies used in this project:
+
+- **React**: Front-end library for building user interfaces
+- **Next.js**: Framework for server-side rendering and static site generation
+- **MongoDB & Mongoose**: Database and ODM for data persistence
+- **Tailwind CSS**: Utility-first CSS framework
+- **Zod**: Schema-based validation library
+- **NextAuth.js**: Authentication for Next.js apps
+- **Resend**: Email service for sending verification and notifications
+- **Radix UI**: Unstyled, accessible components for building custom UI
+
+## Development Tools
+
+- **TypeScript**: Type safety and tooling
+- **ESLint**: Linting for code consistency
+- **PostCSS**: Transformations for CSS
 
 ## License
 
-This project is licensed under the MIT License.
-```
-
-This `README.md` file includes the key features, installation steps, and additional details without the project structure section. You can customize the URLs or specific sections as needed.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
