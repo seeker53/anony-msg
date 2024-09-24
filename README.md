@@ -1,11 +1,12 @@
 # Anony-msg
 
-Anony-msg is an anonymous messaging platform built using **Next.js** and **MongoDB**. This project allows users to send and receive anonymous feedback or messages, with features such as message filtering, authentication, and more.
+Anony-msg is an anonymous messaging platform built using **Next.js** and **MongoDB**. This project allows users to send and receive anonymous feedback or messages, with features such as message filtering, authentication, and more. Importantly, we use the **Moderation API** to flag harmful messages, ensuring the well-being of our users.
 
 ## Features
 
 - Anonymous message sending and receiving
 - Message filtering to prevent harmful or abusive content
+- **Moderation API** integration to flag harmful messages, prioritizing user safety and well-being
 - User authentication (sign-in, sign-up) with **NextAuth**
 - Responsive design built with **TailwindCSS**
 - Custom components and UI elements using **shadcn/ui**
@@ -33,7 +34,7 @@ Ensure you have the following installed:
 
 - **Node.js**: Version 20.14.0 or higher.
 - **MongoDB**: A running instance of MongoDB.
-  
+
 ### Clone the Repository
 
 ```bash
@@ -55,6 +56,7 @@ Create a `.env` file at the root of your project and add the following:
 MONGODB_URI=your_mongodb_connection_string
 RESEND_API_KEY=your_resend_api_key
 NEXTAUTH_SECRET=any_secret_value_of_your_choice
+MODERATION_API_KEY=your_moderation_api_key
 ```
 
 Make sure to replace the placeholder values with your actual credentials.
@@ -83,6 +85,7 @@ npm start
 - **NextAuth** for user authentication.
 - **ShadCN/UI** for UI components.
 - **Resend** for sending emails.
+- **Moderation API** for flagging harmful messages.
 
 ## Scripts
 
@@ -100,6 +103,7 @@ To learn more about the technologies used, check out the following documentation
 - [TailwindCSS Documentation](https://tailwindcss.com/docs/installation)
 - [Resend Documentation](https://resend.com/docs/send-with-nextjs)
 - [ShadCN/UI Documentation](https://ui.shadcn.com/docs)
+- [Moderation API Documentation](https://moderation-api.com/docs)
 
 ## License
 

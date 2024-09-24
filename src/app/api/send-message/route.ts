@@ -1,6 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/user.model";
-import { Message } from "@/models/message.model";
 import MessageModel from "@/models/message.model";
 import mongoose from "mongoose";
 
