@@ -57,7 +57,9 @@ function UserDashboard() {
         setIsSwitchLoading(false);
         try {
             const response = await axios.get<ApiResponse>('/api/get-messages');
-            setMessages(response.data.messages || []);
+            setMessages(response.data.messages || []); // This should now contain full message objects
+            console.log(response.data.messages);
+
             if (refresh) {
                 toast({
                     title: 'Refreshed Messages',
@@ -76,6 +78,7 @@ function UserDashboard() {
             setIsSwitchLoading(false);
         }
     }, [toast]);
+
 
     useEffect(() => {
         if (!session || !session.user) return;

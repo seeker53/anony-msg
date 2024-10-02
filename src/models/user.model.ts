@@ -9,7 +9,7 @@ export interface User extends Document {
     isVerified: boolean;
     verifyCodeExpiry: Date;
     isAcceptingMessages: boolean;
-    messages: mongoose.Types.ObjectId[]; // Reference to Message IDs
+    messages: (mongoose.Types.ObjectId | Message)[]; // Reference to Message IDs
 }
 
 const UserSchema: Schema<User> = new Schema({

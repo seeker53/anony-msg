@@ -35,7 +35,9 @@ const SignInPage = () => {
         redirect: false,
         identifier: data.identifier,
         password: data.password,
+        callbackUrl: '/dashboard',
       });
+      console.log("result of signin : ", result);
       if (result?.error) {
         if (result.error === 'CredentialsSignin') {
           toast({
@@ -51,8 +53,8 @@ const SignInPage = () => {
           });
         }
       }
-      if (result?.url) {
-        router.replace('/dashboard');
+      if (result?.ok) {
+        router.push('/dashboard');
       }
     } catch (error) {
       console.error("Error in signing in", error);
