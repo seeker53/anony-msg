@@ -1,5 +1,6 @@
 import dbConnect from '@/lib/dbConnect'
 import UserModel from '@/models/user.model'
+import VerificationModel from '@/models/verification.model'
 import bcrypt from 'bcryptjs'
 import { sendVerificationEmail } from '@/helpers/sendVerificationEmail'
 import mongoose from 'mongoose'
@@ -10,54 +11,58 @@ export async function POST(request: Request) {
 
     try {
         const { username, email, password } = await request.json()
-        const existingUserVerifiedByUsername = await UserModel.findOne({
-            username,
-            isVerified: true
-        })
 
-        if (existingUserVerifiedByUsername) {
+        const existingVerifiedUserByUsername = await UserModel.findOne({ username })
+        if (existingVerifiedUserByUsername) {
             return Response.json({
                 success: false,
-                message: 'Username already exists'
+                message: 'Verified Username already exists'
             }, {
                 status: 400
             })
         }
 
-        const existingUserByEmail = await UserModel.findOne({ email })
-        const verifyCode = Math.floor(100000 + Math.random() * 900000).toString()
-        if (existingUserByEmail) {
-            if (existingUserByEmail.isVerified) {
-                return Response.json({
-                    success: false,
-                    message: "User already exists with this email"
-                }, {
-                    status: 400
-                })
-            } else {
-                const hashedPassword = await bcrypt.hash(password, 10)
-                existingUserByEmail.password = hashedPassword;
-                existingUserByEmail.verifyCode = verifyCode;
-                existingUserByEmail.verifyCodeExpiry = new Date(Date.now() + 3600000);
-                await existingUserByEmail.save()
-            }
-        } else {
-            const hashedPassword = await bcrypt.hash(password, 10);
-            const expiryDate = new Date()
-            expiryDate.setHours(expiryDate.getHours() + 1)
-
-            const newUser = new UserModel({
-                username,
-                email,
-                password: hashedPassword,
-                verifyCode,
-                isVerified: false,
-                verifyCodeExpiry: expiryDate,
-                isAcceptingMessages: true,
-                messages: [],
+        const existingVerifiedUserByEmail = await UserModel.findOne({ email })
+        if (existingVerifiedUserByEmail) {
+            return Response.json({
+                success: false,
+                message: "Verified User already exists with this email"
+            }, {
+                status: 400
             })
-            await newUser.save()
         }
+        const existingUnverifiedUserByUsername = await VerificationModel.findOne({ username })
+        if (existingUnverifiedUserByUsername) {
+            return Response.json({
+                success: false,
+                message: 'Unverified Username already exists'
+            }, {
+                status: 400
+            })
+        }
+
+        const existingUnverifiedUserByEmail = await VerificationModel.findOne({ email })
+        if (existingUnverifiedUserByEmail) {
+            return Response.json({
+                success: false,
+                message: "Unverified User already exists with this email"
+            }, {
+                status: 400
+            })
+        }
+        const verifyCode = Math.floor(100000 + Math.random() * 900000).toString()
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const expiryDate = new Date()
+        expiryDate.setHours(expiryDate.getHours() + 1)
+
+        const newUser = new VerificationModel({
+            username,
+            email,
+            password: hashedPassword,
+            verifyCode,
+            verifyCodeExpiry: expiryDate,
+        })
+        await newUser.save()
 
         const emailResponse = await sendVerificationEmail(email, username, verifyCode)
         if (!emailResponse.success) {

@@ -2,6 +2,7 @@ import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/models/user.model";
 import { z } from "zod";
 import { usernameValidation } from "@/schemas/signUpSchema";
+import VerificationModel from "@/models/verification.model";
 
 
 const UsernameQuerySchema = z.object({
@@ -31,8 +32,9 @@ export async function GET(request: Request) {
         }
 
         const { username } = result.data
-        const existingVerifiedUser = await UserModel.findOne({ username, isVerified: true })
-        if (existingVerifiedUser) {
+        const existingVerifiedUser = await UserModel.findOne({ username })
+        const existingUnverifiedUser = await VerificationModel.findOne({ username })
+        if (existingVerifiedUser || existingUnverifiedUser) {
             return Response.json({
                 success: false,
                 message: 'Username is already taken'

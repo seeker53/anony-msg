@@ -1,27 +1,35 @@
 import dbConnect from "@/lib/dbConnect";
+import VerificationModel from '@/models/verification.model'
 import UserModel from "@/models/user.model";
-import { z } from "zod";
 
 export async function POST(request: Request) {
     await dbConnect();
     try {
         const { username, code } = await request.json();
         const decodedUsername = decodeURIComponent(username);
-        const user = await UserModel.findOne({ username: decodedUsername });
+        const UnverifiedUser = await VerificationModel.findOne({ username: decodedUsername });
 
-        if (!user) {
+        if (!UnverifiedUser) {
             return Response.json(
                 { success: false, message: "User not found" },
                 { status: 404 } // Change status code for user not found
             );
         }
 
-        const isCodeValid = user.verifyCode === code;
-        const isCodeNotExpired = new Date(user.verifyCodeExpiry) > new Date();
+        const isCodeValid = UnverifiedUser.verifyCode === code;
+        const isCodeNotExpired = new Date(UnverifiedUser.verifyCodeExpiry) > new Date();
 
         if (isCodeNotExpired && isCodeValid) {
-            user.isVerified = true;
-            await user.save();
+            const newUser = new UserModel({
+                username: decodedUsername,
+                email: UnverifiedUser.email,
+                password: UnverifiedUser.password,
+                isAcceptingMessages: true,
+                messages: [],
+            })
+            await newUser.save()
+            await VerificationModel.deleteOne({ username: decodedUsername });
+
             return Response.json(
                 { success: true, message: "Account verified successfully!" },
                 { status: 200 }

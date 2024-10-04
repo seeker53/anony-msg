@@ -5,9 +5,6 @@ export interface User extends Document {
     username: string;
     email: string;
     password: string;
-    verifyCode: string;
-    isVerified: boolean;
-    verifyCodeExpiry: Date;
     isAcceptingMessages: boolean;
     messages: (mongoose.Types.ObjectId | Message)[]; // Reference to Message IDs
 }
@@ -29,18 +26,6 @@ const UserSchema: Schema<User> = new Schema({
     password: {
         type: String,
         required: [true, 'Password is required'],
-    },
-    verifyCode: {
-        type: String,
-        required: [true, 'Verify code is required'],
-    },
-    isVerified: {
-        type: Boolean,
-        default: false
-    },
-    verifyCodeExpiry: {
-        type: Date,
-        required: [true, 'Verify code expiry is required'],
     },
     isAcceptingMessages: {
         type: Boolean,
