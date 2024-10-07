@@ -53,7 +53,7 @@ export async function POST(request: Request) {
         const verifyCode = Math.floor(100000 + Math.random() * 900000).toString()
         const hashedPassword = await bcrypt.hash(password, 10);
         const expiryDate = new Date()
-        expiryDate.setHours(expiryDate.getHours() + 1)
+        expiryDate.setMinutes(expiryDate.getMinutes() + 30);
 
         const newUser = new VerificationModel({
             username,
