@@ -8,6 +8,7 @@ import {
     FormLabel,
     FormMessage,
 } from '@/components/ui/form';
+import { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { useToast } from "@/hooks/use-toast";
 import { ApiResponse } from '@/types/ApiResponse';
@@ -25,12 +26,40 @@ export default function VerifyAccount() {
     const form = useForm<z.infer<typeof verifySchema>>({
         resolver: zodResolver(verifySchema),
     });
+    const [isLoading, setIsLoading] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(true); // Start disabled
+    const [countdown, setCountdown] = useState<number | null>(null);
+
+    const handleResendCode = async () => {
+        setIsLoading(true);
+        try {
+            const response = await axios.post<ApiResponse>(`/api/resend-verifycode`, {
+                username: params.username,
+            });
+            toast({
+                title: 'Success',
+                description: response.data.message,
+            });
+            setCountdown(120); // Start 120-second countdown
+            setIsDisabled(true); // Disable the button again
+
+        } catch (error) {
+            const axiosError = error as AxiosError<ApiResponse>;
+            toast({
+                title: "Error in resending verification code",
+                description: axiosError.response?.data.message || "Unknown error",
+                variant: "destructive",
+            });
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const onSubmit = async (data: z.infer<typeof verifySchema>) => {
         try {
             const response = await axios.post<ApiResponse>(`/api/verify-code`, {
                 username: params.username,
-                code: data.code,
+                verifyCode: data.code,
             });
 
             toast({
@@ -43,13 +72,63 @@ export default function VerifyAccount() {
             const axiosError = error as AxiosError<ApiResponse>;
             toast({
                 title: 'Verification Failed',
-                description:
-                    axiosError.response?.data.message ??
-                    'An error occurred. Please try again.',
+                description: axiosError.response?.data.message || 'An error occurred. Please try again.',
                 variant: 'destructive',
             });
         }
     };
+
+    // Handle countdown logic and button enabling/disabling
+    useEffect(() => {
+        if (countdown !== null && countdown > 0) {
+            setIsDisabled(true); // Ensure the button is disabled during the countdown
+            const intervalId = setInterval(() => {
+                setCountdown((prev) => prev! - 1); // Decrement the countdown
+            }, 1000);
+
+            return () => clearInterval(intervalId); // Clean up the interval on unmount
+        } else if (countdown === 0) {
+            setIsDisabled(false); // Enable the button when countdown ends
+            setCountdown(null);
+        }
+    }, [countdown]);
+
+    // Check if this is the first page load
+    useEffect(() => {
+        const isFirstLoad = sessionStorage.getItem('isFirstLoad');
+
+        if (!isFirstLoad) {
+            // First load, start countdown
+            setCountdown(120); // Set initial countdown to 120 seconds
+            setIsDisabled(true); // Ensure button is disabled on first load
+            sessionStorage.setItem('isFirstLoad', 'true');
+        } else {
+            // If it's not the first load, check countdown from localStorage
+            const storedCountdown = localStorage.getItem('countdown');
+            if (storedCountdown) {
+                const remainingTime = parseInt(storedCountdown, 10);
+                if (remainingTime > 0) {
+                    setCountdown(remainingTime); // Restore countdown
+                    setIsDisabled(true); // Disable the button while the countdown is ongoing
+                } else {
+                    setIsDisabled(false); // Enable the button if no countdown is active
+                    setCountdown(null);
+                }
+            } else {
+                setIsDisabled(false); // If no countdown, enable the button
+                setCountdown(null);
+            }
+        }
+    }, []);
+
+    // Save countdown in localStorage whenever it changes
+    useEffect(() => {
+        if (countdown !== null && countdown > 0) {
+            localStorage.setItem('countdown', countdown.toString());
+        } else {
+            localStorage.removeItem('countdown');
+        }
+    }, [countdown]);
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -73,6 +152,9 @@ export default function VerifyAccount() {
                                 </FormItem>
                             )}
                         />
+                        <Button onClick={handleResendCode} disabled={isDisabled || isLoading} variant="default">
+                            {isLoading ? 'Resending code...' : countdown !== null ? `Resend in ${countdown} s` : 'Resend Code'}
+                        </Button>
                         <Button type="submit">Verify</Button>
                     </form>
                 </Form>

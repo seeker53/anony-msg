@@ -87,7 +87,7 @@ const page = () => {
             <div className="w-full max-w-lg p-10 space-y-10 bg-white rounded-2xl shadow-lg">
                 <div className="text-center">
                     <h1 className="text-3xl font-bold text-gray-800 tracking-tight mb-4">
-                        Welcome Whisper Net
+                        Welcome to whisper-net
                     </h1>
                     <p className="text-sm text-gray-500 mb-6">
                         Join us and share your anonymous thoughts with friends

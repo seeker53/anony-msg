@@ -5,25 +5,32 @@ import UserModel from "@/models/user.model";
 export async function POST(request: Request) {
     await dbConnect();
     try {
-        const { username, code } = await request.json();
+        const { username, verifyCode } = await request.json();
         const decodedUsername = decodeURIComponent(username);
-        const UnverifiedUser = await VerificationModel.findOne({ username: decodedUsername });
+        const verifiedUser = await UserModel.findOne({ username: decodedUsername });
+        if (verifiedUser) {
+            return Response.json(
+                { success: false, message: "User already verified" },
+                { status: 401 }
+            )
+        }
 
-        if (!UnverifiedUser) {
+        const unverifiedUser = await VerificationModel.findOne({ username: decodedUsername });
+        if (!unverifiedUser) {
             return Response.json(
                 { success: false, message: "User not found" },
                 { status: 404 } // Change status code for user not found
             );
         }
 
-        const isCodeValid = UnverifiedUser.verifyCode === code;
-        const isCodeNotExpired = new Date(UnverifiedUser.verifyCodeExpiry) > new Date();
+        const isCodeValid = unverifiedUser.verifyCode === verifyCode;
+        const isCodeNotExpired = new Date(unverifiedUser.verifyCodeExpiry) > new Date();
 
         if (isCodeNotExpired && isCodeValid) {
             const newUser = new UserModel({
                 username: decodedUsername,
-                email: UnverifiedUser.email,
-                password: UnverifiedUser.password,
+                email: unverifiedUser.email,
+                password: unverifiedUser.password,
                 isAcceptingMessages: true,
                 messages: [],
             })
