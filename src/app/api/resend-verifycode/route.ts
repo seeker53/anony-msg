@@ -26,7 +26,10 @@ export async function POST(request: Request) {
         }
 
         const verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
+        const expiryDate = new Date()
+        expiryDate.setMinutes(expiryDate.getMinutes() + 30);
         unverifiedUser.verifyCode = verifyCode;
+        unverifiedUser.verifyCodeExpiry = expiryDate;
         await unverifiedUser.save();
         const emailResponse = await sendVerificationEmail(unverifiedUser.email, unverifiedUser.username, verifyCode)
 
