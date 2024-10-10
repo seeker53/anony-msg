@@ -51,10 +51,10 @@ export default function Home() {
 
           {/* Message Count */}
           <p className="mt-4 text-xl md:text-2xl font-semibold">
-            Over <span className="text-blue-400">{totalMessages || 146}</span> messages sent anonymously till now!
+            Over <span className="text-blue-400">{totalMessages}</span> messages sent anonymously till now!
           </p>
           <p className="mt-4 text-xl md:text-2xl font-semibold">
-            Over <span className="text-blue-400">{userCount || 22}</span> user registered!!!
+            Over <span className="text-blue-400">{userCount}</span> user registered!!!
           </p>
 
           <Link href="/sign-up">
