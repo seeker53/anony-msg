@@ -125,7 +125,7 @@ function UserDashboard() {
 
     return (
         <div className="my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-gray-100 rounded-lg shadow-md w-full max-w-6xl">
-            <h1 className="text-4xl font-bold mb-4 text-gray-800">User Dashboard</h1>
+            <h1 className="text-4xl font-bold mb-4 text-gray-800">Your Dashboard</h1>
 
             <div className="mb-4">
                 <h2 className="text-lg font-semibold mb-2">Copy Your Unique Link</h2>
