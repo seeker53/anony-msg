@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input"
 import { Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-const page = () => {
+const SignUpPage = () => {
     const [username, setUsername] = useState("")
     const [usernameMessage, setUsernameMessage] = useState("")
     const [isCheckingUsername, setIsCheckingUsername] = useState(false)
@@ -34,27 +34,26 @@ const page = () => {
             password: "",
         }
     })
+    const checkUsernameUnique = async () => {
+        if (username) {
+            setIsCheckingUsername(true);
+            setUsernameMessage('');
+            try {
+                const response = await axios.get(`/api/check-username-unique?username=${username}`);
+                console.log("Response", response);
+                setUsernameMessage(response.data.message);
+            } catch (error) {
+                const axiosError = error as AxiosError<ApiResponse>;
+                setUsernameMessage(axiosError.response?.data.message || "Error checking username");
+            } finally {
+                setIsCheckingUsername(false);
+            }
+        } else {
+            setUsernameMessage(''); // Clear message when input is empty or invalid
+        }
+    };
 
     useEffect(() => {
-        const checkUsernameUnique = async () => {
-            if (username) {
-                setIsCheckingUsername(true);
-                setUsernameMessage('');
-                try {
-                    const response = await axios.get(`/api/check-username-unique?username=${username}`);
-                    console.log("Response", response);
-                    setUsernameMessage(response.data.message);
-                } catch (error) {
-                    const axiosError = error as AxiosError<ApiResponse>;
-                    setUsernameMessage(axiosError.response?.data.message || "Error checking username");
-                } finally {
-                    setIsCheckingUsername(false);
-                }
-            } else {
-                setUsernameMessage(''); // Clear message when input is empty or invalid
-            }
-        };
-
         checkUsernameUnique();
     }, [username]);
 
@@ -183,4 +182,4 @@ const page = () => {
 
 }
 
-export default page
+export default SignUpPage

@@ -4,57 +4,63 @@ import { z } from "zod";
 import { usernameValidation } from "@/schemas/signUpSchema";
 import VerificationModel from "@/models/verification.model";
 
-
 const UsernameQuerySchema = z.object({
     username: usernameValidation
-})
+});
 
 export async function GET(request: Request) {
-
-    await dbConnect()
+    await dbConnect();
 
     try {
-        const { searchParams } = new URL(request.url)
-        const queryParam = {
-            username: searchParams.get('username')
-        }
-        // validate with zod
-        const result = UsernameQuerySchema.safeParse(queryParam)
-        console.log(result)
+        console.log(request)
+        const { searchParams } = new URL(request.url);
+        const username = searchParams.get('username');
+
+        // Validate the username using Zod
+        const result = UsernameQuerySchema.safeParse({ username });
+
         if (!result.success) {
-            const usernameErrors = result.error.format().username?._errors || []
-            return Response.json({
-                success: false,
-                message: usernameErrors?.length > 0 ? usernameErrors.join(', ') : 'Invalid query parameters'
-            },
-                { status: 400 }
-            )
+            const usernameErrors = result.error.format().username?._errors || [];
+            return new Response(
+                JSON.stringify({
+                    success: false,
+                    message: usernameErrors.length > 0 ? usernameErrors.join(', ') : 'Invalid query parameters'
+                }),
+                { status: 400, headers: { 'Content-Type': 'application/json' } }
+            );
         }
 
-        const { username } = result.data
-        const existingVerifiedUser = await UserModel.findOne({ username })
-        const existingUnverifiedUser = await VerificationModel.findOne({ username })
+        // Check for existing users
+        const existingVerifiedUser = await UserModel.findOne({ username });
+        const existingUnverifiedUser = await VerificationModel.findOne({ username });
+
         if (existingVerifiedUser || existingUnverifiedUser) {
-            return Response.json({
-                success: false,
-                message: 'Username is already taken'
-            },
-                { status: 400 }
-            )
+            return new Response(
+                JSON.stringify({
+                    success: false,
+                    message: 'Username is already taken'
+                }),
+                { status: 400, headers: { 'Content-Type': 'application/json' } }
+            );
         }
-        return Response.json({
-            success: true,
-            message: 'Username is unique'
-        },
-            { status: 200 }
-        )
+
+        // If no existing user found, return success
+        return new Response(
+            JSON.stringify({
+                success: true,
+                message: 'Username is unique'
+            }),
+            { status: 200, headers: { 'Content-Type': 'application/json' } }
+        );
+
     } catch (error) {
-        console.error("Error checking username", error)
-        return Response.json({
-            success: false,
-            message: "Error checking username"
-        },
-            { status: 500 }
-        )
+        console.error("Error checking username", error);
+        return new Response(
+            JSON.stringify({
+                success: false,
+                message: "Error checking username"
+            }),
+            { status: 500, headers: { 'Content-Type': 'application/json' } }
+        );
     }
 }
