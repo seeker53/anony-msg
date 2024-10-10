@@ -5,14 +5,31 @@ import { Mail } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Autoplay from 'embla-carousel-autoplay';
 import messages from '@/messages.json';
-
+import Link from 'next/link';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
 } from '@/components/ui/carousel';
-
+import { useEffect, useState } from 'react';
 export default function Home() {
+  const [totalMessages, setTotalMessages] = useState(0);
+
+  useEffect(() => {
+    // Fetch the total message count from your API
+    const fetchTotalMessages = async () => {
+      try {
+        const response = await fetch('/api/count-messages'); // Adjust the API endpoint accordingly
+        const data = await response.json();
+        setTotalMessages(data.totalMessages);
+      } catch (error) {
+        console.error('Error fetching message count:', error);
+      }
+    };
+
+    fetchTotalMessages();
+  }, []);
+
   return (
     <div className="flex flex-col flex-grow bg-gray-800 text-white">
       {/* Main content */}
@@ -24,6 +41,17 @@ export default function Home() {
           <p className="mt-3 md:mt-4 text-base md:text-lg">
             Whisper Net - Where your identity remains a secret.
           </p>
+
+          {/* Message Count */}
+          <p className="mt-4 text-xl md:text-2xl font-semibold">
+            Over <span className="text-blue-400">{totalMessages}</span> messages sent anonymously till now!
+          </p>
+
+          <Link href="/sign-up">
+            <Button className="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md">
+              Get Started
+            </Button>
+          </Link>
         </section>
 
         {/* Carousel for Messages */}
@@ -34,7 +62,7 @@ export default function Home() {
           <CarouselContent>
             {messages.map((message, index) => (
               <CarouselItem key={index} className="p-4">
-                <Card className="bg-gray-100">
+                <Card className="bg-gray-100 shadow-lg">
                   <CardHeader>
                     <CardTitle>{message.title}</CardTitle>
                   </CardHeader>
