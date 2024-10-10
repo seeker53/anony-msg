@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { Mail } from 'lucide-react';
+import { Mail, Trophy } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Autoplay from 'embla-carousel-autoplay';
 import messages from '@/messages.json';
@@ -14,7 +14,7 @@ import {
 import { useEffect, useState } from 'react';
 export default function Home() {
   const [totalMessages, setTotalMessages] = useState(0);
-
+  const [userCount, setTotalUserCount] = useState(0);
   useEffect(() => {
     // Fetch the total message count from your API
     const fetchTotalMessages = async () => {
@@ -26,8 +26,18 @@ export default function Home() {
         console.error('Error fetching message count:', error);
       }
     };
+    const fetchUserCount = async () => {
+      try {
+        const response = await fetch('/api/count-users');
+        const data = await response.json();
+        setTotalUserCount(data.userCount);
+      } catch (error) {
+        console.error('Error fetching user count:', error)
+      }
+    }
 
     fetchTotalMessages();
+    fetchUserCount();
   }, []);
 
   return (
@@ -38,13 +48,13 @@ export default function Home() {
           <h1 className="text-3xl md:text-5xl font-bold">
             Whisper your thoughts, connect anonymously.
           </h1>
-          <p className="mt-3 md:mt-4 text-base md:text-lg">
-            Whisper Net - Where your identity remains a secret.
-          </p>
 
           {/* Message Count */}
           <p className="mt-4 text-xl md:text-2xl font-semibold">
-            Over <span className="text-blue-400">{totalMessages}</span> messages sent anonymously till now!
+            Over <span className="text-blue-400">{totalMessages || 146}</span> messages sent anonymously till now!
+          </p>
+          <p className="mt-4 text-xl md:text-2xl font-semibold">
+            Over <span className="text-blue-400">{userCount || 22}</span> user registered!!!
           </p>
 
           <Link href="/sign-up">
