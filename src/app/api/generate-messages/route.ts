@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
         const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
         // Define the prompt
-        const prompt = "Create a list of three uplifting and supportive messages formatted as a single string. Each message should be separated by '||'. These messages are for an anonymous social messaging platform and should be suitable for a diverse audience. Focus on universal themes of encouragement and positivity, avoiding personal or sensitive topics. For example, your output should be structured like this: 'Believe in yourself; you’re capable of amazing things!||Remember, every day is a new opportunity to shine and grow!||You are not alone; your journey is unique and beautiful!'. Ensure the messages are inspiring and contribute to a positive and welcoming environment. Strictly keep the total length of each messages equal under 120 characters.";
+        const prompt = "Create a list of three uplifting and supportive messages formatted as a single string. Each message should be separated by '||'. These messages are for an anonymous social messaging platform and should be suitable for a diverse audience. Focus on universal themes of encouragement and positivity, avoiding personal or sensitive topics. For example, your output should be structured like this: 'Believe in yourself; you’re capable of amazing things!||Remember, every day is a new opportunity to shine and grow!||You are not alone; your journey is unique and beautiful!'. Ensure the messages are inspiring and contribute to a positive and welcoming environment.";
 
         // Generate content using the model
         const result = await model.generateContent(prompt);

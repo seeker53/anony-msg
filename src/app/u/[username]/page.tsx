@@ -82,7 +82,7 @@ export default function SendMessage() {
 
     const fetchSuggestedMessages = async () => {
         try {
-            const response = await fetch('/api/generate-questions', { method: 'POST' });
+            const response = await fetch('/api/generate-messages', { method: 'POST' });
 
             if (!response.ok) {
                 throw new Error('Failed to fetch suggestions');
